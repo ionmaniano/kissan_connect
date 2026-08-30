@@ -1,12 +1,14 @@
 from datetime import timedelta
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 # ============================================================
 # BASE
 # ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
+load_dotenv(BASE_DIR / ".env")
 
 # ============================================================
 # APPLICATIONS
@@ -23,7 +25,7 @@ INSTALLED_APPS = [
 
     # Third-party
     "rest_framework",
-
+    "rest_framework_simplejwt.token_blacklist",
     # Local apps
     "apps.users",
     "apps.listings",
@@ -76,18 +78,16 @@ TEMPLATES = [
 # ============================================================
 # DATABASE
 # ============================================================
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "kissan_connect",
-        "USER": "postgres",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
-
 
 # ============================================================
 # PASSWORD VALIDATION
